@@ -8,13 +8,6 @@ workspace   <- ""   # Workspace name. Use the name that is an ID rather than the
 user 		<- "" 	# User name. Note: user must be either admin or API user.
 password 	<- "" 	# Password of the user indicated above.
 
-susoapi::set_credentials(
-	server = server,
-	workspace = workspace,
-	user = user,
-	password = password
-)
-
 # Where file with interviews to approve is located
 interview_file 	<- "" 	# File name. Note: include extension
 sheet_name 		<- "" 	# Sheet name. 
@@ -31,6 +24,17 @@ statuses_to_approve <- c(100, 120)
 # =============================================================================
 
 renv::restore()
+
+# =============================================================================
+# Set server credentials
+# =============================================================================
+
+susoapi::set_credentials(
+	server = server,
+	workspace = workspace,
+	user = user,
+	password = password
+)
 
 # =============================================================================
 # Run programs
