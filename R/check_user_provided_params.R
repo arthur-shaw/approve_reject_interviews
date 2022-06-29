@@ -10,7 +10,7 @@ file_path <- fs::path(here::here(), interview_file)
 
 # file exists in folder
 if (!file.exists(file_path)) {
-	stop(paste0("File does not exist where indicated: ", paste0(project_folder, interview_file)))
+	stop(paste0("File does not exist where indicated: ", file_path)))
 }
 
 # file is Excel
