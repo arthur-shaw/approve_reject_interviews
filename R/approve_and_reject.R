@@ -50,9 +50,27 @@ if (nrow(to_approve) > 0) {
 
 # reject: apply the `reject_interview()` function to each interview in the interview list
 if (nrow(to_reject) > 0) {
+
+	# reject from current status to next status lower in statuses
 	purrr::pwalk(
 		.l = to_reject,
 		.f = susoreview::reject_interview,
 		statuses_to_reject = statuses_to_reject
 	)
+
+	# reject intially HQ-approved cases to interviewers
+	obs_hq_approved <- to_reject |> 
+		dplyr::filter(interview__status == 130) |>
+		dplyr::select(
+			interview_id = interview__id, 
+			comment = reject_comment
+		)
+
+	if (nrow(obs_hq_approved) > 0) {
+		purrr::pwalk(
+			.l = obs_hq_approved,
+			.f = susoapi::reject_interview_as_sup
+		)
+	}
+
 }
