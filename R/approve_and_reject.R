@@ -16,7 +16,6 @@ rename_to_match_args <- function(df) {
 # Run functions to approve/reject in batch
 # =============================================================================
 
-
 # injest interview list, filtering to those with an approve/reject decision
 interview_list <- readxl::read_excel(
 		path = fs::path(here::here(), interview_file), 
@@ -38,15 +37,6 @@ to_reject <- interview_list |>
 	dplyr::select(interviewId, status, reject_comment = comment) |>
 	dplyr::mutate(reject_comment = as.character(reject_comment)) |>
 	rename_to_match_args()
-
-# approve: apply `approve_interview()` function to each interview in the interview list
-if (nrow(to_approve) > 0) {
-	purrr::pwalk(
-		.l = to_approve,
-		.f = susoreview::approve_interview,
-		statuses_to_approve = statuses_to_approve
-	)
-}
 
 # reject: apply the `reject_interview()` function to each interview in the interview list
 if (nrow(to_reject) > 0) {
@@ -73,4 +63,13 @@ if (nrow(to_reject) > 0) {
 		)
 	}
 
+}
+
+# approve: apply `approve_interview()` function to each interview in the interview list
+if (nrow(to_approve) > 0) {
+	purrr::pwalk(
+		.l = to_approve,
+		.f = susoreview::approve_interview,
+		statuses_to_approve = statuses_to_approve
+	)
 }
