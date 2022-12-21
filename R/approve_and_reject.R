@@ -29,14 +29,14 @@ interview_list <- readxl::read_excel(
 to_approve <- interview_list |>
 	dplyr::filter(decision == "approve") |>
 	dplyr::select(interviewId, status, approve_comment = comment) |>
-	dplyr::mutate(comment = as.character(approve_comment)) |>
+	dplyr::mutate(approve_comment = as.character(approve_comment)) |>
 	rename_to_match_args()
 
 # interviews to reject
 to_reject <- interview_list |> 
 	dplyr::filter(decision == "reject") |>
 	dplyr::select(interviewId, status, reject_comment = comment) |>
-	dplyr::mutate(comment = as.character(reject_comment)) |>
+	dplyr::mutate(reject_comment = as.character(reject_comment)) |>
 	rename_to_match_args()
 
 # approve: apply `approve_interview()` function to each interview in the interview list
